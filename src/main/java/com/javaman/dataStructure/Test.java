@@ -7,4 +7,5 @@ package com.javaman.dataStructure;
  */
 
 public class Test {
+
 }
