@@ -1,6 +1,8 @@
 package com.javaman.algorithms4.datastructure.stack;
 
 import com.javaman.algorithms4.datastructure.node.Node;
+import edu.princeton.cs.algs4.StdIn;
+import edu.princeton.cs.algs4.StdOut;
 
 import java.util.Iterator;
 
@@ -61,6 +63,19 @@ public class StackImplementsByNode<Item> implements Iterable<Item> {
         }
 
         public void remove() {
+        }
+    }
+
+    public static void main(String[] args) {
+        StackImplementsByNode<String> stringStackImplementsByNode = new StackImplementsByNode<>();
+        while (!StdIn.isEmpty()) {
+            String item = StdIn.readString();
+            if (!item.equals("-")) {
+                stringStackImplementsByNode.push(item);
+            } else if (!stringStackImplementsByNode.isEmpty()) {
+                StdOut.print(stringStackImplementsByNode.pop() + "");
+            }
+            StdOut.println("(" + stringStackImplementsByNode.size() + "left on stack)");
         }
     }
 
