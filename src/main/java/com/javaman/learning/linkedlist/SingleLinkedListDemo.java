@@ -19,12 +19,22 @@ public class SingleLinkedListDemo {
         HeroNode heroNode3 = new HeroNode(3, "智多星", "吴用");
         HeroNode heroNode4 = new HeroNode(4, "林冲", "豹子头");
         //
-        SingleLinkedList singleLinkedList = new SingleLinkedList();
+       /* SingleLinkedList singleLinkedList = new SingleLinkedList();
         singleLinkedList.addNode(heroNode1);
-        singleLinkedList.addNode(heroNode2);
+        singleLinkedList.addNode(heroNode);
         singleLinkedList.addNode(heroNode3);
         singleLinkedList.addNode(heroNode4);
+        singleLinkedList.list();*/
+
+
+        SingleLinkedList singleLinkedList = new SingleLinkedList();
+        singleLinkedList.addByOrder(heroNode1);
+        singleLinkedList.addByOrder(heroNode2);
+        singleLinkedList.addByOrder(heroNode4);
+        singleLinkedList.addByOrder(heroNode3);
+        singleLinkedList.addByOrder(heroNode3);
         singleLinkedList.list();
+
 
 
     }
@@ -39,10 +49,10 @@ class SingleLinkedList {
     HeroNode head = new HeroNode(0, "", "");
 
     public void addNode(HeroNode heroNode) {
-        /**
-         * 思路:当不考虑编号的顺序时
-         * 1:找到当前链表的最后节点
-         * 2:将最后一个节点的next域指向next即可
+        /*
+          思路:当不考虑编号的顺序时
+          1:找到当前链表的最后节点
+          2:将最后一个节点的next域指向next即可
          */
         //因为head节点不能动,需要一个临时变量
         HeroNode temp = head;
@@ -57,6 +67,35 @@ class SingleLinkedList {
         //当退出while循环时,temp指向链表的最后
         //将这个节点的next指向新节点
         temp.next = heroNode;
+    }
+
+    public void addByOrder(HeroNode heroNode) {
+        //因为head节点不能动,需要一个临时指针来帮助找到添加的位置
+        //因为是单链表,因为我们找的temp是位于添加位置的前一个节点,否则插入不了
+        HeroNode temp = head;
+        boolean flag = false;//标志添加的编号是否存在,默认是false
+        while (true) {
+            //说明temp已经在链表的最后
+            if (temp.next == null) {
+                break;
+            }
+            //位置找到,就在temp的后面插入
+            if (temp.next.no > heroNode.no) {
+                break;
+            } else if (temp.next.no == heroNode.no) {//希望添加的heroNode编号已经存在
+                flag = true;//说明编号存在
+                break;
+            }
+            temp = temp.next;
+        }
+        //判断flag的值,如果flag=true
+        if (flag) {
+            log.info("准备插入的节点:{},已存在", heroNode.no);
+        } else {
+            //插入到链表中
+            heroNode.next = temp.next;
+            temp.next = heroNode;
+        }
     }
 
     public void list() {
