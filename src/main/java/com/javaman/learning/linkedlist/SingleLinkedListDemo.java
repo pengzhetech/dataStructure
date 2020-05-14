@@ -1,7 +1,10 @@
 package com.javaman.learning.linkedlist;
 
+import lombok.Data;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+
+import static com.javaman.learning.linkedlist.SingleLinkedList.findLastIndexNode;
 
 /**
  * @author pengzhe
@@ -38,14 +41,19 @@ public class SingleLinkedListDemo {
         log.info("修改后的");
         HeroNode newHeroNode = new HeroNode(2, "小路", "玉麒麟");
         singleLinkedList.update(newHeroNode);
-
+/*
         singleLinkedList.list();
         log.info("删除");
         singleLinkedList.delete(1);
         singleLinkedList.delete(4);
         singleLinkedList.delete(3);
         singleLinkedList.delete(2);
-        singleLinkedList.list();
+        singleLinkedList.list();*/
+        log.info("有效的节点个数{}", SingleLinkedList.getLength(singleLinkedList.getHead()));
+
+        log.info("倒数第k个");
+        HeroNode res = findLastIndexNode(singleLinkedList.getHead(), 8);
+        log.info("res:{}", res);
 
 
     }
@@ -53,6 +61,7 @@ public class SingleLinkedListDemo {
 }
 
 @Slf4j
+@Data
 class SingleLinkedList {
     /**
      * 先初始化一个头节点,头节点不要动,仅表示链表的头,不存放具体数据
@@ -173,6 +182,53 @@ class SingleLinkedList {
             log.info("无法删除,要删除的节点{}不存在", no);
         }
 
+    }
+
+    /**
+     * 查找单链表中的倒数第K个节点
+     *
+     * @param head
+     * @return 1:编写一个方法,接收head节点,同时接收一个index
+     * 2:index表示是倒数第index个节点
+     * 3:先把链表从头到尾遍历,得到链表的总的长度
+     * 4:得到size后从链表的第一个开始遍历,遍历size-index个,就可以得到
+     */
+
+    public static HeroNode findLastIndexNode(HeroNode head, int index) {
+        if (head == null) {
+            return null;
+        }
+        //第一次遍历得到链表的长度(节点个数)
+        //
+        int size = getLength(head);
+        //第二次遍历size-index位置,就是我们倒数的第k个节点
+        //先做一个index校验
+        if (index <= 0 || index > size) {
+            return null;
+        }
+        //定义一个辅助变量,使用for循环定位到倒数的index
+        HeroNode cur = head.next;
+        for (int i = 0; i < size - index; i++) {
+            cur = cur.next;
+        }
+        return cur;
+
+    }
+
+    //获取单链表的节点的个数(如果是带头节点的链表,需求不统计头节点)
+    public static int getLength(HeroNode head) {
+        if (head.next == null) {
+            //空链表
+            return 0;
+        }
+        int length = 0;
+        //定义一个辅助变量
+        HeroNode cur = head.next;
+        while (cur != null) {
+            length++;
+            cur = cur.next;
+        }
+        return length;
     }
 
     public void list() {
