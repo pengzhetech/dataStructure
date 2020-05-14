@@ -4,8 +4,9 @@ import lombok.Data;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
-import static com.javaman.learning.linkedlist.SingleLinkedList.findLastIndexNode;
-import static com.javaman.learning.linkedlist.SingleLinkedList.reverseList;
+import java.util.Stack;
+
+import static com.javaman.learning.linkedlist.SingleLinkedList.*;
 
 /**
  * @author pengzhe
@@ -54,6 +55,9 @@ public class SingleLinkedListDemo {
         log.info("倒数第k个");
         HeroNode res = findLastIndexNode(singleLinkedList.getHead(), 8);
         log.info("res:{}", res);
+
+        log.info("逆序打印");
+        reversePrint(singleLinkedList.getHead());
 
         log.info("-------------------反转-------------------");
         reverseList(singleLinkedList.getHead());
@@ -248,6 +252,33 @@ class SingleLinkedList {
         }
         //将head.next指向reverseHead.next实现单链表的反转
         head.next = reverseHead.next;
+
+    }
+
+    /**
+     * 逆序打印链表
+     *
+     * @param head
+     * @return
+     */
+
+    public static void reversePrint(HeroNode head) {
+        if (head.next == null) {
+            //空链表
+            return;
+        }
+        //创建一个栈,将各个节点压入栈中
+        Stack<HeroNode> stack = new Stack<>();
+        HeroNode cur = head.next;
+        //将链表的所有节点压入栈中
+        while (cur != null) {
+            stack.push(cur);
+            cur = cur.next;//让cur后移,这样就可以压入下一个节点
+        }
+        //将栈中的节点进行打印,pop出栈
+        while (stack.size() > 0) {
+            System.out.println(stack.pop());
+        }
 
     }
 
