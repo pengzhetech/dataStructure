@@ -5,6 +5,7 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import static com.javaman.learning.linkedlist.SingleLinkedList.findLastIndexNode;
+import static com.javaman.learning.linkedlist.SingleLinkedList.reverseList;
 
 /**
  * @author pengzhe
@@ -35,7 +36,6 @@ public class SingleLinkedListDemo {
         singleLinkedList.addByOrder(heroNode2);
         singleLinkedList.addByOrder(heroNode4);
         singleLinkedList.addByOrder(heroNode3);
-        singleLinkedList.addByOrder(heroNode3);
 
         singleLinkedList.list();
         log.info("修改后的");
@@ -54,6 +54,10 @@ public class SingleLinkedListDemo {
         log.info("倒数第k个");
         HeroNode res = findLastIndexNode(singleLinkedList.getHead(), 8);
         log.info("res:{}", res);
+
+        log.info("-------------------反转-------------------");
+        reverseList(singleLinkedList.getHead());
+        singleLinkedList.list();
 
 
     }
@@ -212,6 +216,38 @@ class SingleLinkedList {
             cur = cur.next;
         }
         return cur;
+
+    }
+
+    /**
+     * 反转单链表
+     * 1:先定义一个节点reverseHead=new HeroNode()
+     * 2:从头到尾遍历原来的链表,每遍历一个节点,就将其取出,并放在新的链表的最前端
+     * 3:原来的链表的head.next=reverseHead.next
+     *
+     * @param head
+     * @return
+     */
+
+    public static void reverseList(HeroNode head) {
+        //如果当前链表为空,或者只有一个节点,直接返回
+        if (head == null || head.next.next == null) {
+            return;
+        }
+        //定义一个辅助的指针,帮助我们遍历原来的链表
+        HeroNode cur = head.next;
+        //指向当前节点[cur]的下一个节点
+        HeroNode next = null;
+        HeroNode reverseHead = new HeroNode(0, "", "");
+        //遍历原来的链表,每遍历一个节点,就将其取出,并放在新的链表的最前端
+        while (cur != null) {
+            next = cur.next;//先暂时保存当前节点的下一个节点,因为后面需要使用
+            cur.next = reverseHead.next;//将cur的下一个节点指向新的链表的最前端
+            reverseHead.next = cur;//将cur连接到新的链表上
+            cur = next;//让cur后移
+        }
+        //将head.next指向reverseHead.next实现单链表的反转
+        head.next = reverseHead.next;
 
     }
 
