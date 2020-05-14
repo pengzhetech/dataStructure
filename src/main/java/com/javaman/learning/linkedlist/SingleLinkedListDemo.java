@@ -40,6 +40,12 @@ public class SingleLinkedListDemo {
         singleLinkedList.update(newHeroNode);
 
         singleLinkedList.list();
+        log.info("删除");
+        singleLinkedList.delete(1);
+        singleLinkedList.delete(4);
+        singleLinkedList.delete(3);
+        singleLinkedList.delete(2);
+        singleLinkedList.list();
 
 
     }
@@ -134,6 +140,37 @@ class SingleLinkedList {
         } else {
             //没有找到
             log.info("没有找到编号{}的节点", newHeroNode.no);
+        }
+
+    }
+
+    /**
+     * head节点不能动,因此我们需要一个temp辅助节点找到待删除节点的前一个节点
+     * 我们在比较时,是temp.next.no和需要删除的节点的no比较
+     * 1:我们先找到需要删除的这个节点的前一个节点temp
+     * 2:temp.next=temp.next.next
+     * 3:被删除的节点将不会有其他引用指向,会被垃圾回收机制回收
+     */
+
+    public void delete(int no) {
+        HeroNode temp = head;
+        boolean flag = false;//标识是否找到待删除节点的前一个节点
+        while (true) {
+            if (temp.next == null) {
+                break;
+            }
+            if (temp.next.no == no) {
+                //找到了待删除节点的前一个节点temp
+                flag = true;
+                break;
+            }
+            temp = temp.next;
+        }
+        if (flag) {
+            //找到
+            temp.next = temp.next.next;
+        } else {
+            log.info("无法删除,要删除的节点{}不存在", no);
         }
 
     }
