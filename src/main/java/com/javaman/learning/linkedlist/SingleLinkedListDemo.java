@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
  * @date 2020/5/13 23:29
  * @description
  */
-
+@Slf4j
 public class SingleLinkedListDemo {
 
     public static void main(String[] args) {
@@ -33,8 +33,13 @@ public class SingleLinkedListDemo {
         singleLinkedList.addByOrder(heroNode4);
         singleLinkedList.addByOrder(heroNode3);
         singleLinkedList.addByOrder(heroNode3);
-        singleLinkedList.list();
 
+        singleLinkedList.list();
+        log.info("修改后的");
+        HeroNode newHeroNode = new HeroNode(2, "小路", "玉麒麟");
+        singleLinkedList.update(newHeroNode);
+
+        singleLinkedList.list();
 
 
     }
@@ -96,6 +101,41 @@ class SingleLinkedList {
             heroNode.next = temp.next;
             temp.next = heroNode;
         }
+    }
+
+    //修改节点的信息,根据no改,no编号不能改
+
+    /**
+     * @param newHeroNode 根据newHeroNode的no修改
+     */
+    public void update(HeroNode newHeroNode) {
+        //判断是否为空
+        if (head.next == null) {
+            log.info("链表为空");
+            return;
+        }
+        HeroNode temp = head.next;
+        boolean flag = false;//表示是否找到该节点
+        while (true) {
+            if (temp == null) {
+                break;//已经遍历完整个链表
+            }
+            if (temp.no == newHeroNode.no) {
+                //找到了
+                flag = true;
+                break;
+            }
+            temp = temp.next;
+        }
+        //根据flag判断是否找到要修改的节点
+        if (flag) {
+            temp.name = newHeroNode.name;
+            temp.nickName = newHeroNode.nickName;
+        } else {
+            //没有找到
+            log.info("没有找到编号{}的节点", newHeroNode.no);
+        }
+
     }
 
     public void list() {
