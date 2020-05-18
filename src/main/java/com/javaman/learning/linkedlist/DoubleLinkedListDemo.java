@@ -1,12 +1,14 @@
 package com.javaman.learning.linkedlist;
 
-import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author pengzhe
  * @date 2020/5/17 16:31
- * @description
+ * @description 单向链表的缺点:
+ * 1:单向链表的查找方向只能是一个方向,而双向链表可以向前或者向后查找
+ * 2:单向链表不能实现自我删除,需要靠辅助节点,而双向链表则可以实现自我删除,所以前面我们单链表删除时节点,总是
+ * 找到temp,temp是待删除节点的前一个节点
  */
 @Slf4j
 public class DoubleLinkedListDemo {
