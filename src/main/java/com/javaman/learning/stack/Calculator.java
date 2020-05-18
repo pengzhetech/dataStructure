@@ -25,7 +25,7 @@ public class Calculator {
 
     public static void main(String[] args) {
 
-        String expression = "3+2*6-2";
+        String expression = "3+2444*6-2";
         ArrayStack2 numberStack = new ArrayStack2(10);
         ArrayStack2 operatorStack = new ArrayStack2(10);
 
