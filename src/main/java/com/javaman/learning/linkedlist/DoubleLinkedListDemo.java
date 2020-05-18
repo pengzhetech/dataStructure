@@ -8,8 +8,36 @@ import lombok.extern.slf4j.Slf4j;
  * @date 2020/5/17 16:31
  * @description
  */
-
+@Slf4j
 public class DoubleLinkedListDemo {
+
+    public static void main(String[] args) {
+
+        HeroNode2 heroNode1 = new HeroNode2(1, "宋江", "及时雨");
+        HeroNode2 heroNode2 = new HeroNode2(2, "卢俊义", "玉麒麟");
+        HeroNode2 heroNode3 = new HeroNode2(3, "智多星", "吴用");
+        HeroNode2 heroNode4 = new HeroNode2(4, "林冲", "豹子头");
+
+        DoubleLinkedList doubleLinkedList = new DoubleLinkedList();
+        doubleLinkedList.addNode(heroNode1);
+        doubleLinkedList.addNode(heroNode2);
+        doubleLinkedList.addNode(heroNode3);
+        doubleLinkedList.addNode(heroNode4);
+        doubleLinkedList.list();
+
+        HeroNode2 heroNode5 = new HeroNode2(4, "公孙胜", "入云龙");
+
+        doubleLinkedList.update(heroNode5);
+
+        log.info("修改后的");
+        doubleLinkedList.list();
+
+        doubleLinkedList.delete(3);
+        log.info("删除后的链表情况");
+        doubleLinkedList.list();
+    }
+
+
 }
 
 @Slf4j
@@ -145,7 +173,6 @@ class DoubleLinkedList {
 
 }
 
-@ToString
 class HeroNode2 {
     public int no;
     public String name;
@@ -157,6 +184,15 @@ class HeroNode2 {
         this.no = no;
         this.name = name;
         this.nickName = nickName;
+    }
+
+    @Override
+    public String toString() {
+        return "HeroNode2{" +
+                "no=" + no +
+                ", name='" + name + '\'' +
+                ", nickName='" + nickName + '\'' +
+                '}';
     }
 }
 
