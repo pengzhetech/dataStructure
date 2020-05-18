@@ -36,6 +36,7 @@ public class Calculator {
         int res = 0;
         int operator = 0;
         char ch = ' ';//将每次扫描得到的char保存到ch
+        String keepNum = "";//用于拼接多位数
         while (true) {
             //依次得到expression的每一个字段
             ch = expression.substring(index, index + 1).charAt(0);
@@ -57,7 +58,29 @@ public class Calculator {
                     operatorStack.push(ch);
                 }
             } else {//如果是数
-                numberStack.push(ch - 48);// "1+3"==>'1' ==>1
+                // numberStack.push(ch - 48);// "1+3"==>'1' ==>1
+                // 分析思路
+                /**
+                 * 当处理多位数时,不能发现一个数就立即入栈,因为它可能是多位数
+                 * 在处理数时,需要向expression的表达式的index的后面在一位,如果是数继续扫描,如果是符号,入栈
+                 * 因此需要定义一个变量,用于拼接
+                 *
+                 */
+                keepNum += ch;
+                //如果ch已经是expression的最后一位,则直接入栈
+                if (index == expression.length() - 1) {
+                    numberStack.push(Integer.parseInt(keepNum));
+                } else {
+                    //判断下一位字符是不是数字,如果是数字则继续扫描
+
+                    //只是看最后一位,并不是index++
+                    if (operatorStack.isOperator(expression.substring(index + 1, index + 2).charAt(0))) {
+                        //
+                        numberStack.push(Integer.parseInt(keepNum));
+                        //重要的！！！！
+                        keepNum = "";
+                    }
+                }
             }
             index++;
             if (index >= expression.length()) {
