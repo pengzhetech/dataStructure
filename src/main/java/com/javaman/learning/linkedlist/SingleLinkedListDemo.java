@@ -189,7 +189,6 @@ class SingleLinkedList {
         } else {
             log.info("无法删除,要删除的节点{}不存在", no);
         }
-
     }
 
     /**
