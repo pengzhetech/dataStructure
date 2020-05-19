@@ -10,18 +10,19 @@ import java.util.Stack;
 /**
  * @author pengzhe
  * @date 2020/5/19 07:55
- * @description
+ * @description 后缀表达式求值
  */
 @Slf4j
 public class PolandNotation {
     public static void main(String[] args) {
         //先定义一个逆波兰表达式 (3+4)*5-6==>3 4+5 *6 -
+        //(30+4)*5-6==>30 4+5 *6 -
+        //4*5-8+60+8==>4 5 * 8 - 60 +8 2 / +
         //为了方便,数字和符号使用空格隔开
-        String suffixExpression = "3 4 + 5 * 6 - ";
+        String suffixExpression = "4 5 * 8 - 60 + 8 2 / +";
         /**
          * 1:先将suffixExpression装入到ArrayList中
          * 2:将ArrayList传给一个方法,遍历ArrayList,配合栈完成计算
-         * 3:
          */
         List<String> listString = getListString(suffixExpression);
 
