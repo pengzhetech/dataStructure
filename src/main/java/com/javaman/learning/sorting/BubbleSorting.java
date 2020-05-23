@@ -1,7 +1,6 @@
 package com.javaman.learning.sorting;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Test;
 
 import java.util.Arrays;
 
@@ -78,10 +77,12 @@ public class BubbleSorting {
 
     public static void bubble(int[] arr) {
         int temp = 0;//临时变量
+        boolean flag = false;//标识变量,标识是否进行过交换
         for (int i = 0; i < arr.length - 1; i++) {
             for (int j = 0; j < arr.length - 1 - i; j++) {
                 //如果前面的数比后面的数大,则交换
                 if (arr[j] > arr[j + 1]) {
+                    flag = true;
                     temp = arr[j];
                     arr[j] = arr[j + 1];
                     arr[j + 1] = temp;
@@ -89,6 +90,12 @@ public class BubbleSorting {
             }
             log.info("第{}趟排序后的数据", i + 1);
             log.info(Arrays.toString(arr));
+
+            if (!flag) {//在一次排序中,一次交换都没发生过
+                break;
+            } else {
+                flag = false;//重置flag,进行下次判断
+            }
         }
     }
 
