@@ -1,5 +1,6 @@
 package com.javaman.learning.stack;
 
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -21,13 +22,19 @@ public class PolandNotation {
          * 1:1+((2+3)*4)-5
          * 2:因为直接对string操作不方便,因此现将1+((2+3)*4)-5转成list
          * 即1+((2+3)*4)-5==》ArrayList[1,+,(,(,........]
+         * [1, +, (, (, 2, +, 3, ), *, 4, ), -, 5]===>
          *
          */
 
         String expression = "1+((2+3)*4)-5";
         List<String> strings = toInfixExpressionList(expression);
-        System.out.println(strings);
+        log.info("中缀表达式对应的list:{}", strings);//[1, +, (, (, 2, +, 3, ), *, 4, ), -, 5]
 
+        List<String> strings1 = parseSuffixExpressionList(strings);
+        log.info("后缀表达式对应的list:{}", strings1);
+
+        int calculate = calculate(strings1);
+        log.info("结果:{}",calculate);
         //先定义一个逆波兰表达式 (3+4)*5-6==>3 4+5 *6 -
         //(30+4)*5-6==>30 4+5 *6 -
         //4*5-8+60+8==>4 5 * 8 - 60 +8 2 / +
@@ -76,6 +83,42 @@ public class PolandNotation {
         return ls;
     }
 
+    //
+    public static List<String> parseSuffixExpressionList(List<String> ls) {
+        //定义两个栈
+        Stack<String> s1 = new Stack<>();//符号栈
+        //说明:因为s2这个栈在整个转换的过程中没有pop的操作,而且后面我们还需要逆序输出,因此比较麻烦,这里我们就不用栈了
+        //而直接使用list替代
+        //  Stack<String> s2 = new Stack<>();//存储中间结果的栈s2
+        List<String> s2 = Lists.newArrayList();
+        for (String item : ls) {
+            //如果是一个数,就入栈s2
+            if (item.matches("\\d+")) {
+                s2.add(item);
+            } else if (item.equals("(")) {
+                s1.push(item);
+            } else if (item.equals(")")) {
+                while (!s1.peek().equals("(")) {
+                    s2.add(s1.pop());
+                }
+                s1.pop();//将（弹出s1栈,消除小括号
+            } else {
+                //当item的优先级小于等于栈顶的运算符的优先级,
+                //将S1栈顶的运算符弹出并压入到S2中,再次转到4.1与S1中新的栈顶运算符比较
+                // 我们缺少一个比较优先级高低的方法
+                while (s1.size() != 0 && Operation.getValue(s1.peek()) >= Operation.getValue(item)) {
+                    s2.add(s1.pop());
+                }
+                //还需将item压入栈
+                s1.push(item);
+            }
+        }
+        //将s1中剩余的运算符移到s2
+        while (s1.size() != 0) {
+            s2.add(s1.pop());
+        }
+        return s2;
+    }
 
     public static int calculate(List<String> ls) {
         //创建一个栈,只需要一个即可
@@ -106,5 +149,35 @@ public class PolandNotation {
         }
         //最后留在栈中的数据就是运算结果
         return Integer.parseInt(stack.pop());
+    }
+}
+
+class Operation {
+
+    private static int ADD = 1;
+    private static int SUB = 1;
+    private static int MUL = 2;
+    private static int DIV = 2;
+
+    public static int getValue(String operation) {
+        int result = 0;
+        switch (operation) {
+            case "+":
+                result = ADD;
+                break;
+            case "-":
+                result = SUB;
+                break;
+            case "*":
+                result = MUL;
+                break;
+            case "/":
+                result = DIV;
+                break;
+            default:
+                System.out.println("不存在");
+                break;
+        }
+        return result;
     }
 }
