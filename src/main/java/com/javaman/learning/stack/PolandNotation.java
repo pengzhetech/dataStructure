@@ -15,6 +15,19 @@ import java.util.Stack;
 @Slf4j
 public class PolandNotation {
     public static void main(String[] args) {
+
+        /**
+         * 中缀表达式转后缀表达式
+         * 1:1+((2+3)*4)-5
+         * 2:因为直接对string操作不方便,因此现将1+((2+3)*4)-5转成list
+         * 即1+((2+3)*4)-5==》ArrayList[1,+,(,(,........]
+         *
+         */
+
+        String expression = "1+((2+3)*4)-5";
+        List<String> strings = toInfixExpressionList(expression);
+        System.out.println(strings);
+
         //先定义一个逆波兰表达式 (3+4)*5-6==>3 4+5 *6 -
         //(30+4)*5-6==>30 4+5 *6 -
         //4*5-8+60+8==>4 5 * 8 - 60 +8 2 / +
@@ -24,10 +37,10 @@ public class PolandNotation {
          * 1:先将suffixExpression装入到ArrayList中
          * 2:将ArrayList传给一个方法,遍历ArrayList,配合栈完成计算
          */
-        List<String> listString = getListString(suffixExpression);
+        //  List<String> listString = getListString(suffixExpression);
 
-        int res = calculate(listString);
-        log.info("计算的结果是:{}", res);
+        //  int res = calculate(listString);
+        // log.info("计算的结果是:{}", res);
 
     }
 
@@ -38,6 +51,31 @@ public class PolandNotation {
         String[] split = suffixExpression.split(" ");
         return new ArrayList<>(Arrays.asList(split));
     }
+
+    //将中缀表达式转成对应的list
+    public static List<String> toInfixExpressionList(String s) {
+        List<String> ls = new ArrayList<>();
+        int i = 0;//这是一个指针,用于遍历s
+        String str;//对多位树的拼接
+        char c;//每遍历到一个字符,就放入到c
+        do {
+            //如果c是一个非数字,我们就需要加入到ls中
+            if ((c = s.charAt(i)) <= 48 || (c = s.charAt(i)) > 57) {
+                ls.add("" + c);
+                i++;//i需要后移
+            } else {
+                //如果是一个数,需要考虑多位数的问题
+                str = "";//先将string置成空串
+                while (i < s.length() && (c = s.charAt(i)) >= 48 && (c = s.charAt(i)) <= 57) {
+                    str += c;//拼接
+                    i++;
+                }
+                ls.add(str);
+            }
+        } while (i < s.length());
+        return ls;
+    }
+
 
     public static int calculate(List<String> ls) {
         //创建一个栈,只需要一个即可
