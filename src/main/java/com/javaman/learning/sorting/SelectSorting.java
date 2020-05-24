@@ -2,7 +2,9 @@ package com.javaman.learning.sorting;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 /**
  * @author pengzhe
@@ -20,9 +22,24 @@ public class SelectSorting {
     public static void main(String[] args) {
 
         int[] arr = {101, 34, 119, 1};
-        log.info("排序前:{}", arr);
-        selectSorting(arr);
-        log.info("排序后:{}", arr);
+        // log.info("排序前:{}", arr);
+        // selectSorting(arr);
+        // log.info("排序后:{}", arr);
+
+        int[] arr2 = new int[80000];
+        for (int i = 0; i < 80_000; i++) {
+            arr2[i] = (int) (Math.random() * 8000000);
+        }
+
+        Date time = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String beforeTime = simpleDateFormat.format(time);
+        log.info("排序前的时间:{}", beforeTime);
+        selectSorting(arr2);
+
+        Date time2 = new Date();
+        String afterTime = simpleDateFormat.format(time2);
+        log.info("排序前的时间:{}", afterTime);
     }
 
     public static void selectSort(int[] arr) {
@@ -97,7 +114,7 @@ public class SelectSorting {
                     minIndex = j;//重置minIndex
                 }
             }
-            //将最小值放在arr[i],即交换
+            //将最小值放在arr[],即交换
             if (minIndex != i) {
                 arr[minIndex] = arr[i];
                 arr[i] = min;
