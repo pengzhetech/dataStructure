@@ -16,7 +16,7 @@ public class ShellSorting {
 
     public static void main(String[] args) {
         int[] arr = {8, 9, 1, 7, 2, 3, 5, 4, 6, 0};
-        shellSorting(arr);
+        shellSortingByShift(arr);
     }
 
     public static void shellSort(int[] arr) {
@@ -74,7 +74,7 @@ public class ShellSorting {
      *
      * @param arr 需要排序的数组
      */
-    public static void shellSorting(int[] arr) {
+    public static void shellSortingBySwap(int[] arr) {
         int temp = 0;
         int count = 0;
         for (int gap = arr.length / 2; gap > 0; gap /= 2) {
@@ -92,6 +92,33 @@ public class ShellSorting {
                 }
             }
             log.info("Shell排序第{}轮后：{}", ++count, arr);
+        }
+    }
+
+    /**
+     * 移位法实现Shell排序
+     *
+     * @param arr
+     */
+    public static void shellSortingByShift(int[] arr) {
+        //增量gap,并逐步缩小gap
+        for (int gap = arr.length / 2; gap > 0; gap /= 2) {
+            //从第gap个元素,诸葛对其所在的组进行直接插入排序
+            for (int i = gap; i < arr.length; i++) {
+                int j = i;
+                int temp = arr[j];
+                if (arr[j] < arr[j - gap]) {
+                    while (j - gap >= 0 && temp < arr[j - gap]) {
+                        //移动
+                        arr[j] = arr[j - gap];
+                        j -= gap;
+                    }
+                    //退出while循环后,就给temp找到了插入的位置
+                    arr[j] = temp;
+                }
+            }
+
+            log.info("Shell排序后：{}", arr);
         }
     }
 }
