@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 public class InsertSorting {
 
     public static void main(String[] args) {
-        int[] arr = {334324,101, 34, 119, 1,-11,0};
+        int[] arr = {334324, 101, 34, 119, 1, -11, 0};
         log.info("排序前:{}", arr);
         insertSorting(arr);
     }
@@ -91,7 +91,10 @@ public class InsertSorting {
                 insertIndex--;
             }
             //当退出while循环时,说明插入的位置找到,insertIndex+1
-            arr[insertIndex + 1] = insertValue;
+            //
+            if (insertIndex + 1 != i) {
+                arr[insertIndex + 1] = insertValue;
+            }
             log.info("第{}轮插入后:{}", i, arr);
         }
     }
