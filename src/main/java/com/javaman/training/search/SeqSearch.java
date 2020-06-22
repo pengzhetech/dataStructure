@@ -1,4 +1,4 @@
-package com.javaman.learning.search;
+package com.javaman.training.search;
 
 import lombok.extern.slf4j.Slf4j;
 

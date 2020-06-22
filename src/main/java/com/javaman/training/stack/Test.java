@@ -1,4 +1,4 @@
-package com.javaman.learning.stack;
+package com.javaman.training.stack;
 
 /**
  * dev

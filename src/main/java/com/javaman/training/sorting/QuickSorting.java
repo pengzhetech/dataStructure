@@ -1,4 +1,4 @@
-package com.javaman.learning.sorting;
+package com.javaman.training.sorting;
 
 import lombok.extern.slf4j.Slf4j;
 

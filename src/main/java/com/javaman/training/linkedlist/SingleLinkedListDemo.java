@@ -1,4 +1,4 @@
-package com.javaman.learning.linkedlist;
+package com.javaman.training.linkedlist;
 
 import lombok.Data;
 import lombok.ToString;
@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.Stack;
 
-import static com.javaman.learning.linkedlist.SingleLinkedList.*;
+import static com.javaman.training.linkedlist.SingleLinkedList.*;
 
 /**
  * @author pengzhe

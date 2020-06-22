@@ -1,4 +1,4 @@
-package com.javaman.learning.sparsearray;
+package com.javaman.training.sparsearray;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,4 +1,4 @@
-package com.javaman.learning.queue;
+package com.javaman.training.queue;
 
 import lombok.extern.slf4j.Slf4j;
 

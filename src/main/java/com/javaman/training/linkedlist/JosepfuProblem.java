@@ -1,4 +1,4 @@
-package com.javaman.learning.linkedlist;
+package com.javaman.training.linkedlist;
 
 import lombok.Data;
 import lombok.ToString;

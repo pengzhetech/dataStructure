@@ -1,4 +1,4 @@
-package com.javaman.learning.recursion;
+package com.javaman.training.recursion;
 
 import lombok.extern.slf4j.Slf4j;
 

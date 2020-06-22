@@ -1,4 +1,4 @@
-package com.javaman.learning.stack;
+package com.javaman.training.stack;
 
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
